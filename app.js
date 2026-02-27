@@ -9,6 +9,9 @@ var usersRouter = require('./routes/users');
 var mbgRouter = require('./routes/mbg');
 var kipkRouter = require('./routes/kipk');
 var kategoriRouter = require('./routes/kategori');
+var flash = require('express-flash'); // Import library express flash
+var session = require('express-session'); // Import library express session
+var biodataRouter = require('./routes/biodata');//memanggil router biodata
 
 var app = express();
 
@@ -26,7 +29,13 @@ app.use('/', indexRouter);
 app.use('/mbg', mbgRouter);
 app.use('/kipk', kipkRouter);
 app.use('/kategori', kategoriRouter);
-
+app.use('/biodata', biodataRouter);//memanggil router biodata
+app.use(session({
+    secret: 'secret-key',
+    resave: false,
+    saveUninitialized: true
+}));
+app.use(flash());
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
