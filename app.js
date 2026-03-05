@@ -25,17 +25,18 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/mbg', mbgRouter);
-app.use('/kipk', kipkRouter);
-app.use('/kategori', kategoriRouter);
-app.use('/biodata', biodataRouter);//memanggil router biodata
 app.use(session({
     secret: 'secret-key',
     resave: false,
     saveUninitialized: true
 }));
 app.use(flash());
+
+app.use('/', indexRouter);
+app.use('/mbg', mbgRouter);
+app.use('/kipk', kipkRouter);
+app.use('/kategori', kategoriRouter);
+app.use('/biodata', biodataRouter);//memanggil router biodata
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

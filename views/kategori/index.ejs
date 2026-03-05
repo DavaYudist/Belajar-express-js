@@ -1,23 +1,18 @@
-<!-- Standar HTML5 -->
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Menampilkan variabel title EJS -->
     <title><%= title %></title>
-    <!-- UI framework dan CSS kustom -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <style>
         body { background-color: #f8f9fa; }
         .card { border-radius: 15px; }
     </style>
 </head>
-<!-- Memusatkan konten -->
 <body class="container mt-5">
     <div class="row">
         <div class="col-md-12">
-            <!-- Wrapper UI modern dengan bayangan -->
             <div class="card shadow-sm border-0">
                 <div class="card-header bg-primary text-white p-3">
                     <h3 class="card-title mb-0"><%= title %></h3>
@@ -25,7 +20,6 @@
                 <div class="card-body p-4">
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <h5 class="text-secondary">Daftar Data</h5>
-                        <!-- Link navigasi -->
                         <a href="/kategori/create" class="btn btn-success shadow-sm">+ Tambah Kategori</a>
                     </div>
 
@@ -39,30 +33,20 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <!-- Memeriksa data dari database -->
-                                <% if(kategori.length > 0) { %>
-                                    <!-- Melakukan iterasi baris data -->
-                                    <% for(var i = 0; i < kategori.length; i++) { %>
+                                <% if (kategori.length > 0) { %>
+                                    <% kategori.forEach((item, index) => { %>
                                         <tr>
-                                            <!-- Penomoran dinamis -->
-                                            <td><%= i + 1 %></td>
-                                            <!-- Mengambil kolom database -->
-                                            <td><%= kategori[i].nama_kategori %></td>
-                                            <td class="text-center">
-                                                <a href="#" class="btn btn-sm btn-warning text-white">Edit</a>
-                                                <a href="#" class="btn btn-sm btn-danger">Hapus</a>
+                                            <td><%= index + 1 %></td>
+                                            <td><%= item.nama_kategori %></td>
+                                          <td class="text-center">
+                                                <a href="/kategori/edit/<%= item.id_kategori %>" class="btn btn-sm btn-warning text-white">Edit</a>
+                                                <a href="/kategori/delete/<%= item.id_kategori %>" class="btn btn-sm btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus kategori <%= item.nama_kategori %>? Tindakan ini tidak bisa dibatalkan.');">Hapus</a>
                                             </td>
                                         </tr>
-                                    <% } %>
-                                <!-- untuk menangani database kosong -->
+                                    <% }) %>
                                 <% } else { %>
                                     <tr>
-                                        <td colspan="3" class="text-center text-muted p-4">
-                                            <!-- Umpan balik visual untuk data kosong -->
-                                            <div class="alert alert-info mb-0">
-                                                Data kategori masih kosong.
-                                            </div>
-                                        </td>
+                                        <td colspan="3" class="text-center">Tidak ada data</td>
                                     </tr>
                                 <% } %>
                             </tbody>
@@ -70,7 +54,7 @@
                     </div>
                 </div>
             </div>
-            <p class="text-center text-muted mt-4"><small>&copy; 2026 - PENS Sumenep</small></p>
+            <p class="text-center text-muted mt-4"><small>&copy; 2026</small></p>
         </div>
     </div>
 </body>
