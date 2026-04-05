@@ -1,0 +1,63 @@
+<%- include('../partials/head') %>
+<%- include('../partials/navbar') %>
+<div class="container mt-4 mb-5">
+    <%- include('../partials/massage') %>
+    
+    <div class="card shadow-sm border-0">
+        <div class="card-header bg-success text-white p-3">
+            <h3 class="card-title mb-0"><%= title %></h3>
+        </div>
+        <div class="card-body p-4">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="text-secondary">Data Inventori Produk</h5>
+                <a href="/produk/create" class="btn btn-primary shadow-sm">+ Tambah Produk</a>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-hover table-striped border align-middle">
+                    <thead class="table-dark">
+                        <tr>
+                            <th width="5%">No</th>
+                            <th>Gambar</th>
+                            <th>Nama Produk</th>
+                            <th>Kategori</th>
+                            <th>Harga</th>
+                            <th width="20%" class="text-center">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% if (produk.length > 0) { %>
+                            <% produk.forEach((item, index) => { %>
+                                <tr>
+                                    <td><%= index + 1 %></td>
+                                    <td><img src="/images/<%= item.gambar_produk %>" alt="<%= item.gambar_produk %>" style="max-width: 50px; border-radius: 5px;"></td>
+                                    <td class="fw-bold"><%= item.nama_produk %></td>
+                                    <td>
+                                        <span class="badge bg-info text-dark">
+                                            <%= item.nama_kategori ? item.nama_kategori : 'Tanpa Kategori' %>
+                                        </span>
+                                    </td>
+                                    <td>Rp <%= item.harga.toLocaleString('id-ID') %></td>
+                                    <td class="text-center">
+                                        <a href="/produk/edit/<%= item.id_produk %>" class="btn btn-sm btn-warning text-white">
+                                            Edit
+                                        </a>
+                                        <a href="/produk/delete/<%= item.id_produk %>" class="btn btn-sm btn-danger" 
+                                           onclick="return confirm('Hapus produk <%= item.nama_produk %>?');">
+                                            Hapus
+                                        </a>
+                                    </td>
+                                </tr>
+                            <% }) %>
+                        <% } else { %>
+                            <tr>
+                                <td colspan="6" class="text-center text-muted p-4">Belum ada data produk tersedia.</td>
+                            </tr>
+                        <% } %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<%- include('../partials/foot') %>

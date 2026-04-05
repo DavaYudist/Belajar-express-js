@@ -1,0 +1,57 @@
+<%- include('../partials/head') %>
+<div class="container mt-4 mb-5">
+    <%- include('../partials/massage') %>
+    
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-warning text-dark p-3">
+                    <h3 class="card-title mb-0"><i class="bi bi-pencil-square"></i> Edit Mahasiswa</h3>
+                </div>
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="text-secondary">Ubah Detail Mahasiswa</h5>
+                        <a href="/mahasiswa" class="btn btn-secondary shadow-sm">Kembali</a>
+                    </div>
+
+                    <form action="/mahasiswa/update/<%= data.id_mahasiswa %>" method="POST" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label for="nrp" class="form-label fw-bold">NRP</label>
+                            <input type="number" class="form-control" id="nrp" name="nrp" value="<%= data.nrp %>" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="nama" class="form-label fw-bold">Nama</label>
+                            <input type="text" class="form-control" id="nama" name="nama" value="<%= data.nama %>" required>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="jenis_kelamin" class="form-label fw-bold">Jenis Kelamin</label>
+                            <select class="form-select" id="jenis_kelamin" name="jenis_kelamin" required>
+                                <option value="Laki-laki" <%= data.jenis_kelamin === 'Laki-laki' ? 'selected' : '' %>>Laki-laki</option>
+                                <option value="Perempuan" <%= data.jenis_kelamin === 'Perempuan' ? 'selected' : '' %>>Perempuan</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="foto_mahasiswa" class="form-label fw-bold">Foto Mahasiswa (Opsional)</label>
+                            <input type="file" class="form-control" id="foto_mahasiswa" name="foto_mahasiswa">
+                            <div class="form-text">Biarkan kosong jika tidak ingin mengubah foto.</div>
+                            <% if (data.foto_mahasiswa) { %>
+                                <div class="mt-2">
+                                    <p class="mb-1">Foto Saat Ini:</p>
+                                    <img src="/images/mahasiswa/<%= data.foto_mahasiswa %>" alt="<%= data.nama %>" style="max-width: 100px; border-radius: 5px;">
+                                </div>
+                            <% } %>
+                        </div>
+
+                        <div class="d-grid mt-4">
+                            <button type="submit" class="btn btn-primary btn-lg">Simpan Perubahan</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<%- include('../partials/foot') %>
