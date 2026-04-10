@@ -1,25 +1,39 @@
-<div class="container">
-    <div class="row">
-
-        <ul class="nav justify-content-center">
-            <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/">
-                    <img src="/images/Logo_PENS.png" alt="Logo Pens" height="40">
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/produk">Produk</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/kategori">Kategori</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/mahasiswa">Mahasiswa</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-            </li>
-        </ul>
-
+<nav class="navbar navbar-expand-lg navbar-dark bg-success mb-4 shadow-sm">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <img src="/images/Logo_PENS.png" alt="Logo Pens" height="40" class="d-inline-block align-text-top bg-white p-1 rounded">
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link text-white" href="/produk">Produk</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="/kategori">Kategori</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="/mahasiswa">Mahasiswa</a>
+        </li>
+      </ul>
+      
+      <ul class="navbar-nav ms-auto align-items-center">
+        <% if (locals.isLoggedIn) { %>
+          <li class="nav-item">
+            <a class="nav-link btn btn-outline-light btn-sm px-3 ms-lg-2 text-white" href="/logout">Logout</a>
+          </li>
+        <% } else { %>
+          <li class="nav-item">
+            <a class="nav-link text-white" href="/login">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link btn btn-light text-success btn-sm px-3 ms-lg-2 fw-bold" href="/register">Register</a>
+          </li>
+        <% } %>
+      </ul>
     </div>
-</div>
+  </div>
+</nav>

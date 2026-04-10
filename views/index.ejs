@@ -1,12 +1,31 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-    <p>Welcome to <%= wapres %></p>
-  </body>
-</html>
+<%- include('partials/head', {title: title}) %>
+<%- include('partials/navbar') %>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
+            <div class="py-5">
+                <h1 class="display-4 text-success fw-bold"><%= title %></h1>
+                <p class="lead text-secondary mt-3">Welcome to <%= title %></p>
+                <p class="text-success mt-1 fw-medium">Welcome to <%= wapres %></p>
+                <hr class="my-4">
+                
+                <% if (!locals.isLoggedIn) { %>
+                <div class="d-flex justify-content-center gap-3 mt-4">
+                    <a href="/login" class="btn btn-success px-4 py-2">Get Started (Login)</a>
+                    <a href="/register" class="btn btn-outline-success px-4 py-2">Register Now</a>
+                </div>
+                <% } else { %>
+                <div class="alert alert-success d-inline-block mt-4 px-4 shadow-sm" role="alert">
+                    <i class="bi bi-check-circle-fill me-2"></i> You are securely logged in.
+                </div>
+                <div class="mt-3">
+                    <a href="/produk" class="btn btn-success px-4">Browse Products</a>
+                </div>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('partials/foot') %>

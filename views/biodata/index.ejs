@@ -1,46 +1,42 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title><%= title %></title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-</head>
-<body class="bg-light">
-    <div class="container mt-5">
-        <div class="card shadow border-0">
-            <div class="card-header bg-success text-white">
-                <h3 class="mb-0"><%= title %></h3>
-            </div>
-            <div class="card-body">
-                <table class="table table-striped align-middle">
-                    <thead class="table-dark">
-                        <tr>
-                            <th>No</th>
-                            <th>Foto</th>
-                            <th>Nama Lengkap</th>
-                            <th>L/P</th>
-                            <th>Alamat</th>
-                            <th>Hobi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <% if(data.length) { %>
-                            <% for(var i = 0; i < data.length; i++) { %>
-                                <tr>
-                                    <td><%= i + 1 %></td>
-                                    <td><img src="/images/<%= data[i].foto_profil %>" width="50" class="rounded-circle"></td>
-                                    <td><%= data[i].nama %></td>
-                                    <td><%= data[i].jenis_kelamin %></td>
-                                    <td><%= data[i].alamat %></td>
-                                    <td><%= data[i].hobi %></td>
-                                </tr>
-                            <% } %>
-                        <% } else { %>
-                            <tr><td colspan="6" class="text-center">Data masih kosong.</td></tr>
+<%- include('../partials/head', {title: title}) %>
+<%- include('../partials/navbar') %>
+
+<div class="container mt-5 mb-5">
+    <div class="card shadow border-0">
+        <div class="card-header bg-success text-white py-3">
+            <h3 class="mb-0"><%= title %></h3>
+        </div>
+        <div class="card-body p-4">
+            <table class="table table-striped align-middle border">
+                <thead class="table-dark">
+                    <tr>
+                        <th>No</th>
+                        <th>Foto</th>
+                        <th>Nama Lengkap</th>
+                        <th>L/P</th>
+                        <th>Alamat</th>
+                        <th>Hobi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% if(data.length) { %>
+                        <% for(var i = 0; i < data.length; i++) { %>
+                            <tr>
+                                <td><%= i + 1 %></td>
+                                <td><img src="/images/<%= data[i].foto_profil %>" width="50" class="rounded-circle"></td>
+                                <td><%= data[i].nama %></td>
+                                <td><%= data[i].jenis_kelamin %></td>
+                                <td><%= data[i].alamat %></td>
+                                <td><%= data[i].hobi %></td>
+                            </tr>
                         <% } %>
-                    </tbody>
-                </table>
-            </div>
+                    <% } else { %>
+                        <tr><td colspan="6" class="text-center text-muted p-4">Data masih kosong.</td></tr>
+                    <% } %>
+                </tbody>
+            </table>
         </div>
     </div>
-</body>
-</html>
+</div>
+
+<%- include('../partials/foot') %>

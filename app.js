@@ -15,7 +15,10 @@ var session = require("express-session"); // Import library express session
 var biodataRouter = require("./routes/biodata"); //memanggil router biodata
 var mahasiswaRouter = require('./routes/mahasiswa');
 
+
 var app = express();
+
+const memoryStore = require('session-memory-store')(session);
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -31,21 +34,32 @@ app.use("/static", express.static(path.join(__dirname, "public/images")));
 
 app.use(
   session({
-    secret: "secret-key",
-    resave: false,
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 24, // 24 hours
+      secure: false,
+      httpOnly: true,
+      sameSite: "strict",
+    },
+    store: new session.MemoryStore(),
     saveUninitialized: true,
+    resave: true,
+    secret: "secret",
   }),
 );
 app.use(flash());
 
+
+
 app.use("/", indexRouter);
+app.use("/users", usersRouter);
 app.use("/mbg", mbgRouter);
 app.use("/kipk", kipkRouter);
 app.use("/kategori", kategoriRouter);
 app.use("/produk", produkRouter);
 app.use("/biodata", biodataRouter); //memanggil router biodata
 app.use("/mahasiswa", mahasiswaRouter);
-
+app.use("/users", usersRouter);
+app.use("/password", usersRouter);
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
