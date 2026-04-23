@@ -34,9 +34,9 @@ class model_kategori {
         });
       });
     }
-    static async update(id_kategori, nama_kategori){
+    static async update(id_kategori, data){
       return new Promise((resolve, reject) => {
-        connection.query('UPDATE kategori SET nama_kategori = ? WHERE id_kategori = ?', [nama_kategori, id_kategori], (err, rows) => {
+        connection.query('UPDATE kategori SET ? WHERE id_kategori = ?', [data, id_kategori], (err, rows) => {
           if (err) {
             reject(err);
           } else {
