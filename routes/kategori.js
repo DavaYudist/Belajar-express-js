@@ -2,7 +2,6 @@ var express = require("express");
 const connection = require("../config/database");
 const model_kategori = require("../model/model_kategori");
 var router = express.Router();
-
 /* GET home page */
 router.get("/", async function (req, res, next) {
   let rows = await model_kategori.getAll();
@@ -75,5 +74,6 @@ router.get("/delete/:id", async function (req, res, next) {
     res.redirect("/kategori");
   }
 });
+
 
 module.exports = router;

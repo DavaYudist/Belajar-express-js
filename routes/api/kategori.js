@@ -1,34 +1,52 @@
 var express = require("express");
 const connection = require("../../config/database");
 const model_kategori = require("../../model/model_kategori");
+const verifyToken = require('../../config/middlewares/jwt');
 
 var router = express.Router();
 
-/* GET home page */
-router.get("/", async function (req, res, next) {
-  let rows = await model_kategori.getAll();
-  return res.status(200).json({
-    status: "success",
-    message: "Data berhasil diambil",
-    data: rows,
-  });
-});
 
-/* GET create form */
-router.get("/create", async function (req, res, next) {
+router.get("/", verifyToken, async function (req, res, next) {
   try {
-    let dataKategori = await model_kategori.getAll();
-
-    res.render("kategori/create", {
-      title: "CreateKategori",
-      kategori: dataKategori,
+    let rows = await model_kategori.getAll();
+    return res.status(200).json({
+      status: "success",
+      message: "Data berhasil diambil",
+      data: rows,
     });
   } catch (err) {
     next(err);
   }
 });
 
-/* POST store data */
+router.get("/:id", async function(req, res, next) {
+  try {
+    let id = req.params.id;
+    let data = await model_kategori.getId(id);
+
+    if (data.length > 0) {
+      return res.status(200).json({
+        status: "success",
+        message: "Data berhasil diambil",
+        data: data[0],
+      });
+    } else {
+      return res.status(404).json({
+        status: "error",
+        message: "Data tidak ditemukan",
+      });
+    }
+  } catch (err) {
+    return res.status(500).json({
+      status: "error",
+      message: "Terjadi kesalahan pada server",
+    });
+  }
+});
+
+/**
+ * 3. POST STORE DATA
+ */
 router.post("/store", async function (req, res, next) {
   try {
     let nama_kategori = req.body.nama_kategori;
@@ -45,25 +63,9 @@ router.post("/store", async function (req, res, next) {
   }
 });
 
-/* GET edit form */
-router.get("/edit/:id", function (req, res, next) {
-  const id_kategori = req.params.id;
-  model_kategori
-    .getId(id_kategori)
-    .then((data) => {
-      res.status(200).json({
-        status: "success",
-        message: "Data berhasil diambil",
-        data: data[0],
-      });
-    })
-    .catch((err) => {
-      console.error("Error : ", err);
-      return res.status(500).send("Terjadi Kesalahan, Error : " + err);
-    });
-});
-
-/* POST update data */
+/**
+ * 4. POST UPDATE DATA
+ */
 router.post("/update/:id", async function (req, res, next) {
   let id = req.params.id;
   let nama_kategori = req.body.nama_kategori;
@@ -74,10 +76,9 @@ router.post("/update/:id", async function (req, res, next) {
       message: "Nama kategori tidak boleh kosong",
     });
   }
-  let data = {
-    nama_kategori: nama_kategori
-  };
+
   try {
+    let data = { nama_kategori: nama_kategori };
     await model_kategori.update(id, data);
     return res.status(200).json({
       status: "success",
@@ -91,6 +92,9 @@ router.post("/update/:id", async function (req, res, next) {
   }
 });
 
+/**
+ * 5. GET DELETE DATA
+ */
 router.get("/delete/:id", async function (req, res, next) {
   try {
     let id = req.params.id;

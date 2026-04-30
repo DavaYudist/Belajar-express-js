@@ -4,6 +4,9 @@ var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 
+var dotenv = require("dotenv");
+dotenv.config();
+
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 var mbgRouter = require("./routes/mbg");
@@ -17,6 +20,9 @@ var mahasiswaRouter = require('./routes/mahasiswa');
 
 var apiKategoriRouter = require('./routes/api/kategori');//api kategori
 var apiProdukRouter = require('./routes/api/produk');//api produk
+
+var registerUser = require('./routes/auth/register');
+var loginUser = require('./routes/auth/login');
 
 var app = express();
 
@@ -66,6 +72,10 @@ app.use("/users", usersRouter);
 app.use("/password", usersRouter);
 app.use('/api/kategori', apiKategoriRouter); //api kategori
 app.use('/api/produk', apiProdukRouter); //api produk
+
+app.use('/api/register', registerUser);
+app.use('/api/login', loginUser);
+
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
